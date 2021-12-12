@@ -12,7 +12,8 @@ connectDB();
 server.use(express.json());
 
 // Define Routes
-// server.use("/api/posts", require("./routes/posts"));
+server.use("/api/posts", require("./routes/post"));
+server.use("/api/comments", require("./routes/comment"));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {
