@@ -1,12 +1,12 @@
 const { Router } = require("express");
-const postController = require("../controllers/post");
+const commentController = require("../controllers/comment");
 const router = Router();
 
-router.post("/", postController.create);
-router.get("/", postController.find);
-router.get("/all", postController.findAll);
-router.get("/:id", postController.findOne);
-router.patch("/:id", postController.update);
-router.delete("/:id", postController.delete);
+router.post("/", commentController.create);
+router.get("/", commentController.find);
+router.get("/all", commentController.findAll);
+router.get("/:id", commentController.findOne);
+router.patch("/:id", commentController.update);
+router.delete("/:id", commentController.delete);
 
 module.exports = router;
