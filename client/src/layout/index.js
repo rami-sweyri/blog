@@ -1,6 +1,5 @@
 import React from "react";
 import Alerts from "./alerts";
-import Footer from "./footer";
 import Header from "./header";
 
 const Layout = ({ children }) => {
@@ -9,7 +8,6 @@ const Layout = ({ children }) => {
       <Header />
       <Alerts />
       {children}
-      <Footer />
     </div>
   );
 };

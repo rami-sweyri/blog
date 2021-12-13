@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../../components/modal";
+import Post from "../../components/post";
 import Layout from "../../layout";
 import { creatPost, readPosts } from "../../redux/actions/posts";
-import { format } from "date-fns";
 
 const Posts = () => {
   const { posts, readable } = useSelector(state => state.postsReducer);
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({});
   const [showModal, setShowModal] = useState(true);
+  const [showComments, setShowComments] = useState(false);
+
   useEffect(() => {
     if (!readable) {
       dispatch(readPosts());
@@ -50,19 +52,12 @@ const Posts = () => {
             </div>
           </Modal>
           {posts.map(post => (
-            <div
-              className={`flex flex-col justify-center items-center bg-main-300 rounded my-3 w-full h-full overflow-hidden`}
-              key={post.id}>
-              <div className="flex items-center justify-between w-full p-3 bg-main-100 ">
-                <p className="text-sm text-white"> {post.title}</p>
-                <span className="text-xs text-gray-100">
-                  {format(new Date(post.createdAt), "dd/MM/yyyy")}
-                </span>
-              </div>
-              <p className="p-3 mt-3 text-sm leading-6 text-white ">
-                {post.body}
-              </p>
-            </div>
+            <Post
+              key={post._id}
+              showComments={showComments}
+              setShowComments={setShowComments}
+              post={post}
+            />
           ))}
         </div>
       </div>
