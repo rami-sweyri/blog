@@ -5,10 +5,10 @@ import Header from "./header";
 
 const Layout = ({ children }) => {
   return (
-    <div className="flex flex-col justify-between w-full h-full min-h-screen ">
+    <div className="flex flex-col items-center w-full h-full min-h-screen bg-main-200 ">
       <Header />
       <Alerts />
-      <div className="flex flex-col w-full md:w-9/12">{children}</div>
+      {children}
       <Footer />
     </div>
   );

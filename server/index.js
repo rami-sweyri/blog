@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const connectDB = require("./db");
 const path = require("path");
+const cors = require("cors");
 
 const server = express();
 
@@ -10,6 +11,12 @@ connectDB();
 
 // Init Middleware
 server.use(express.json());
+
+// Init Cors
+var corsOptions = {
+  origin: "http://localhost:3000",
+};
+server.use(cors(corsOptions));
 
 // Define Routes
 server.use("/api/posts", require("./routes/post"));

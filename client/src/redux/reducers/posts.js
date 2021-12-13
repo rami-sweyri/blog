@@ -72,7 +72,7 @@ export default function postsReducer(state = initialState, action) {
     case POST_ERROR:
       return {
         ...state,
-        errors: [...state.errors, payload],
+        // errors: [...state.errors, payload],
       };
     default:
       return state;

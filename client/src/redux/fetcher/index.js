@@ -32,7 +32,9 @@ export const fetcher = ({
             success.data.priority
           )
         );
-      !withReload && dispatch(finishedReload);
+
+      withReload && dispatch({ type: finishedReload });
+
       return success;
     };
     const onError = error => {
@@ -54,11 +56,13 @@ export const fetcher = ({
           )
         );
 
-      withReload && dispatch(finishedReload);
+      withReload && dispatch({ type: finishedReload });
+
       return error;
     };
     try {
-      withReload && dispatch(startReload);
+      withReload && dispatch({ type: startReload });
+
       const success =
         method === "get" || method === "delete"
           ? await axios[method](url, {

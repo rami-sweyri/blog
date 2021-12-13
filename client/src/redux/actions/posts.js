@@ -10,10 +10,11 @@ import {
   UPDATE_POST,
 } from "../types/posts";
 
-export const creatPost = () =>
+export const creatPost = data =>
   fetcher({
     url: "http://localhost:8080/api/posts",
     method: "post",
+    data: data,
     successType: CREATE_POST,
     errorType: POST_ERROR,
     startReload: START_POSTS_RELOAD,
