@@ -1,5 +1,6 @@
 import { fetcher } from "../fetcher";
 import {
+  CLEAR_POSTS,
   CREATE_POST,
   DELETE_POST,
   FINISHED_POSTS_RELOAD,
@@ -21,9 +22,13 @@ export const creatPost = data =>
     finishedReload: FINISHED_POSTS_RELOAD,
   });
 
-export const readPosts = () =>
+export const readPosts = ({ page = 1, query = {}, limit = 5 }) =>
   fetcher({
-    url: "http://localhost:8080/api/posts",
+    url:
+      "http://localhost:8080/api/posts" +
+      `?query=${encodeURIComponent(
+        JSON.stringify(query)
+      )}&page=${page}&limit=${limit}`,
     method: "get",
     successType: READ_POSTS,
     errorType: POST_ERROR,
@@ -41,10 +46,11 @@ export const readOnePost = id =>
     finishedReload: FINISHED_POSTS_RELOAD,
   });
 
-export const updatePost = id =>
+export const updatePost = data =>
   fetcher({
-    url: `http://localhost:8080/api/posts/${id}`,
-    method: "update",
+    url: `http://localhost:8080/api/posts/${data._id}`,
+    method: "patch",
+    data: data,
     successType: UPDATE_POST,
     errorType: POST_ERROR,
     startReload: START_POSTS_RELOAD,
@@ -54,9 +60,13 @@ export const updatePost = id =>
 export const deletePost = id =>
   fetcher({
     url: `http://localhost:8080/api/posts/${id}`,
-    method: "update",
+    method: "delete",
     successType: DELETE_POST,
     errorType: POST_ERROR,
     startReload: START_POSTS_RELOAD,
     finishedReload: FINISHED_POSTS_RELOAD,
   });
+
+export const clearPosts = () => dispatch => {
+  dispatch({ type: CLEAR_POSTS });
+};

@@ -11,10 +11,12 @@ const options = {
 
 const createCommentSchema = Joi.object({
   text: Joi.string().min(3).max(1255).required(),
+  post: Joi.objectId(),
 });
 
 const updateCommentSchema = Joi.object({
   text: Joi.string().min(3).max(1255),
+  post: Joi.objectId(),
   _id: Joi.objectId(),
 });
 

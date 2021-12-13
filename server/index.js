@@ -18,6 +18,19 @@ var corsOptions = {
 };
 server.use(cors(corsOptions));
 
+server.options("/*", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type,Content-Length,Server,Date,access-control-allow-methods,access-control-allow-origin"
+  );
+  res.header(
+    "Access-Control-Allow-Methods",
+    "PUT,POST,GET,DELETE,OPTIONS,PATCH"
+  );
+  res.send("send some thing whatever");
+});
+
 // Define Routes
 server.use("/api/posts", require("./routes/post"));
 server.use("/api/comments", require("./routes/comment"));

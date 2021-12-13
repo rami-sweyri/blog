@@ -7,3 +7,4 @@ export const POST_ERROR = "POST_ERROR";
 export const CLEAR_POST = "CLEAR_POST";
 export const START_POSTS_RELOAD = "START_POSTS_RELOAD";
 export const FINISHED_POSTS_RELOAD = "FINISHED_POSTS_RELOAD";
+export const CLEAR_POSTS = "CLEAR_POSTS";

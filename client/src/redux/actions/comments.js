@@ -8,12 +8,13 @@ import {
   READ_COMMENTS,
   START_COMMENTS_RELOAD,
   UPDATE_COMMENT,
+  CLEAR_COMMENTS,
 } from "../types/comments";
 
 export const creatComment = data =>
   fetcher({
-    url: "http://localhost:8080/api/comments",
-    method: "comment",
+    url: `http://localhost:8080/api/posts/${data.post}/comments`,
+    method: "post",
     data: data,
     successType: CREATE_COMMENT,
     errorType: COMMENT_ERROR,
@@ -21,9 +22,9 @@ export const creatComment = data =>
     finishedReload: FINISHED_COMMENTS_RELOAD,
   });
 
-export const readComments = () =>
+export const readComments = post_id =>
   fetcher({
-    url: "http://localhost:8080/api/comments",
+    url: `http://localhost:8080/api/posts/${post_id}/comments`,
     method: "get",
     successType: READ_COMMENTS,
     errorType: COMMENT_ERROR,
@@ -60,3 +61,9 @@ export const deleteComment = id =>
     startReload: START_COMMENTS_RELOAD,
     finishedReload: FINISHED_COMMENTS_RELOAD,
   });
+
+export const clearComments = () => dispatch => {
+  dispatch({
+    type: CLEAR_COMMENTS,
+  });
+};

@@ -8,6 +8,7 @@ import {
   START_COMMENTS_RELOAD,
   FINISHED_COMMENTS_RELOAD,
   COMMENT_ERROR,
+  CLEAR_COMMENTS,
 } from "../types/comments";
 
 const initialState = {
@@ -37,13 +38,14 @@ export default function commentsReducer(state = initialState, action) {
       return {
         ...state,
         comments: [payload.data, ...state.comments],
+        comment: payload.data,
       };
     case UPDATE_COMMENT:
       return {
         ...state,
         comments: [
           ...state.comments.map(comment =>
-            comment.id === payload.data.id ? payload.data : comment
+            comment._id === payload.data._id ? payload.data : comment
           ),
         ],
       };
@@ -51,7 +53,7 @@ export default function commentsReducer(state = initialState, action) {
       return {
         ...state,
         comments: [
-          ...state.comments.filter(comment => comment.id !== payload.data.id),
+          ...state.comments.filter(comment => comment._id !== payload.data._id),
         ],
       };
     case CLEAR_COMMENT:
@@ -59,7 +61,11 @@ export default function commentsReducer(state = initialState, action) {
         ...state,
         comment: {},
       };
-
+    case CLEAR_COMMENTS:
+      return {
+        ...state,
+        comments: [],
+      };
     case START_COMMENTS_RELOAD:
       return {
         ...state,

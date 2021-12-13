@@ -39,7 +39,7 @@ function Alert(props) {
       {downloadTimer < 9 && (
         <span
           className={`absolute bottom-0 text-xs cursor-pointer right-1 ${
-            props.alert.status === "error" ? " text-red-300" : "text-green-300"
+            props.alert.status === "error" ? " text-red-400" : "text-green-400"
           } `}>
           {downloadTimer}
         </span>
@@ -58,9 +58,11 @@ const Alerts = () => {
           ? ""
           : "hidden"
       }`}>
-      {alertReducer.map(alert => (
-        <Alert key={alert.id} alert={alert}></Alert>
-      ))}
+      {alertReducer
+        .filter(alert => alert.priority === "high")
+        .map(alert => (
+          <Alert key={alert.id} alert={alert}></Alert>
+        ))}
     </div>
   );
 };

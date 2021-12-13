@@ -10,7 +10,9 @@ exports.create = async (req, res) => {
   const { error } = createPostValidate(req.body);
   if (error)
     return res.status(400).send({
-      error: error.details[0].message,
+      message: error.details[0].message,
+      status: "error",
+      priority: "high",
     });
 
   const post = new Post(req.body);
@@ -20,30 +22,17 @@ exports.create = async (req, res) => {
       data: post,
       message: "Post successfully created",
       status: "success",
+      priority: "high",
     });
   } catch (error) {
     res.status(error.status || 500).send({
       message: "Something went wrong. please try again later",
       status: "error",
+      priority: "high",
     });
   }
 };
 
-exports.findAll = async (req, res) => {
-  try {
-    const posts = await Post.find(queryString(req));
-    res.status(200).send({
-      data: posts,
-      message: "Posts successfully fetched",
-      status: "success",
-    });
-  } catch (error) {
-    res.status(error.status || 500).send({
-      message: "Something went wrong. please try again later",
-      status: "error",
-    });
-  }
-};
 exports.find = async (req, res) => {
   try {
     const paginationQuery = await paginatedResults(req, Post);
@@ -58,11 +47,13 @@ exports.find = async (req, res) => {
       data: posts,
       message: "Posts successfully fetched",
       status: "success",
+      priority: "low",
     });
   } catch (error) {
     res.status(error.status || 500).send({
       message: "Something went wrong. please try again later",
       status: "error",
+      priority: "high",
     });
   }
 };
@@ -74,16 +65,19 @@ exports.findOne = async (req, res) => {
       return res.status(404).send({
         message: "Post doesn't exist",
         status: "error",
+        priority: "high",
       });
     res.status(200).send({
       data: post,
       message: "Post successfully fetched",
       status: "success",
+      priority: "low",
     });
   } catch (error) {
     res.status(error.status || 500).send({
       message: "Something went wrong. please try again later",
       status: "error",
+      priority: "high",
     });
   }
 };
@@ -94,6 +88,7 @@ exports.update = async (req, res) => {
     return res.status(400).send({
       message: error.details[0].message,
       status: "error",
+      priority: "high",
     });
   try {
     const post = await Post.findByIdAndUpdate(req.params.id, req.body, {
@@ -103,17 +98,20 @@ exports.update = async (req, res) => {
       return res.status(404).send({
         message: "Post doesn't exist",
         status: "error",
+        priority: "high",
       });
     }
     res.status(200).send({
       data: post,
       message: "Post successfully updated",
       status: "success",
+      priority: "high",
     });
   } catch (error) {
     res.status(error.status || 500).send({
       message: "Something went wrong. please try again later",
       status: "error",
+      priority: "high",
     });
   }
 };
@@ -125,17 +123,20 @@ exports.delete = async (req, res) => {
       return res.status(404).send({
         message: "Post doesn't exist",
         status: "error",
+        priority: "high",
       });
     }
     res.status(200).send({
       data: post,
       message: "Post successfully deleted",
       status: "success",
+      priority: "high",
     });
   } catch (error) {
     res.status(error.status || 500).send({
       message: "Something went wrong. please try again later",
       status: "error",
+      priority: "high",
     });
   }
 };

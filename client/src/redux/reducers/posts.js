@@ -8,12 +8,14 @@ import {
   START_POSTS_RELOAD,
   FINISHED_POSTS_RELOAD,
   POST_ERROR,
+  CLEAR_POSTS,
 } from "../types/posts";
 
 const initialState = {
   posts: [],
+  pagination: {},
   post: {},
-  error: {},
+  errors: [],
   loading: false,
   readable: false,
 };
@@ -25,7 +27,8 @@ export default function postsReducer(state = initialState, action) {
     case READ_POSTS:
       return {
         ...state,
-        posts: [...payload.data],
+        posts: [...state.posts, ...payload.data],
+        pagination: payload.pagination,
         readable: true,
       };
     case READ_ONE_POST:
@@ -37,25 +40,31 @@ export default function postsReducer(state = initialState, action) {
       return {
         ...state,
         posts: [payload.data, ...state.posts],
+        post: payload.data,
       };
     case UPDATE_POST:
       return {
         ...state,
         posts: [
           ...state.posts.map(post =>
-            post.id === payload.data.id ? payload.data : post
+            post._id === payload.data._id ? payload.data : post
           ),
         ],
       };
     case DELETE_POST:
       return {
         ...state,
-        posts: [...state.posts.filter(post => post.id !== payload.data.id)],
+        posts: [...state.posts.filter(post => post._id !== payload.data._id)],
       };
     case CLEAR_POST:
       return {
         ...state,
         post: {},
+      };
+    case CLEAR_POSTS:
+      return {
+        ...state,
+        posts: [],
       };
 
     case START_POSTS_RELOAD:
